@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="title">Просмотр объвления - {{ job.title }}</h1>
+
+    <a href="{% url 'edit_job' job.id %}" class="button has-background-primary mb-4">Редактировать</a>
+
+    <p class="is-size-4">{{ job.short_description }}</p>
+
+    <p>{{ job.long_description }}</p>
+
+    <b>Название компании: </b>{{ job.company_name}}<br>
+    <b>Адрес: </b>{{ job.company_address}}<br>
+    <b>Почтовый индекс: </b>{{ job.company_zipcode}}<br>
+    <b>Расположение: </b>{{ job.company_place}}<br>
+    <b>Страна: </b>{{ job.company_country}}<br>
+    <b>Размер компании: </b>{{ job.get_company_size_display }}<br>
+    <br>
+    <p>Список заявлений на это объявление:</p>
+    {% for application in job.applications.all %}
+        <a href="{% url 'view_application' application.id %}">{{ application.created_by.username }}</a>
+    {% endfor %}
+{% endblock %}

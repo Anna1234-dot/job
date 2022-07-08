@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="title">{{ job.title }} ({{ job.get_status_display }})</h1>
+
+    <p class="is-size-4">{{ job.short_description }}</p>
+
+    <p>{{ job.long_description }}</p>
+
+    <b>Название: </b>{{ job.company_name}}<br>
+    {% if job.company_address %}<b>Адрес: </b>{{ job.company_address}}<br>{% endif %}
+    {% if job.company_zipcode %}<b>почтовый индекс: </b>{{ job.company_zipcode}}<br>{% endif %}
+    {% if job.company_place %}<b>Расположение: </b>{{ job.company_place}}<br>{% endif %}
+    {% if job.company_country %}<b>Страна: </b>{{ job.company_country}}<br>{% endif %}
+    <b>Размер компании: </b>{{ job.get_company_size_display }} человек<br>
+
+    <hr>
+
+   
+    {% if job.created_by == request.user %}
+        <p>Это ваше объявление</p>
+    {% else %}
+        <a href="{% url 'apply_for_job' job.id %}" class="button has-background-primary">Apply for job</a>
+    {% endif %}
+{% endblock %}

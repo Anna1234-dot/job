@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="title">Подать заявление на работу - {{ job.title }}</h1>
+
+    <form method="post" action=".">
+        {% csrf_token %}
+
+        {% if form.errors %}
+            {% for error in form.errors %}
+                <div class="notification is-danger">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="field">
+            <label>Общая информация</label>
+
+            <div class="control">
+                <textarea class="textarea" name="content" id="id_content"></textarea>
+            </div>
+        </div>
+
+        <div class="field">
+            <label>Опыт работы</label>
+
+            <div class="control">
+                <textarea class="textarea" name="experience" id="id_experience"></textarea>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <button class="button has-background-primary">Отправить</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

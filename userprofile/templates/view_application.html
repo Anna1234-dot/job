@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="title">Просмотр вакансии</h1>
+
+    <h2 class="subtitle">{{ application.job.title }}</h2>
+
+    <small>Дата публикации: {{ application.created_at }}</small>
+
+    <p><strong>Общая информация: </strong><br>{{ application.content }}</p>
+    <p><strong>Опыт: </strong><br>{{ application.experience }}</p>
+
+    <hr>
+
+    <h2 class="subtitle">Диалог</h2>
+
+    {% for message in application.conversationmessages.all %}
+        <div class="notification">
+            <b>{{ message.created_by.username }} - {{ message.created_at|timesince }} назад</b><br>
+
+            {{ message.content }}
+        </div>
+    {% empty %}
+        <p>Диалог не начат</p>
+
+        <hr>
+    {% endfor %}
+    
+    <form method="post" action=".">
+        {% csrf_token %}
+
+        <div class="field">
+            <div class="control">
+                <textarea class="textarea" placeholder="Ваше сообщение" name="content" id="id_content"></textarea>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <button class="button has-background-primary">Отправить</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
